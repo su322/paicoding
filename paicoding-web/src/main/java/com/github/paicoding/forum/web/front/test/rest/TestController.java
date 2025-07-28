@@ -395,8 +395,8 @@ public class TestController {
     @Autowired
     private RequestCountService requestCountService;
 
-    // 准备使用 FastExcel 批量导出 500万条数据
-    @Permission(role = UserRole.ADMIN)
+    // 准备使用 FastExcel 批量导出 1000万条数据
+    @Permission(role = UserRole.LOGIN)
     @GetMapping(path = "exportBatch")
     public void exportBatch(HttpServletResponse response) throws IOException {
         OutputStream outputStream = response.getOutputStream();
@@ -441,9 +441,9 @@ public class TestController {
         }
     }
 
-    // 准备使用 FastExcel 批量导出 500万条数据
+    // 准备使用 FastExcel 批量导出 1000万条数据
     // 自定义线程池，以及 CountDownLatch 进行优化
-    @Permission(role = UserRole.ADMIN)
+    @Permission(role = UserRole.LOGIN)
     @GetMapping(path = "exportBatchPoolCountDownLatch")
     public void exportBatchPoolCountDownLatch(HttpServletResponse response) throws IOException {
         OutputStream outputStream = response.getOutputStream();

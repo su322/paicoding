@@ -15,7 +15,7 @@ public class Insert2TestExcel {
             conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/pai_coding?useSSL=false&rewriteBatchedStatements=true",
                     "root",
-                    ""
+                    "11111111"
             );
 
             stmt = conn.createStatement();
@@ -35,11 +35,14 @@ public class Insert2TestExcel {
 
             int batchSize = 5000; // 批量大小
             LocalDate baseDate = Date.valueOf("2020-01-01").toLocalDate();
-            for (int i = 0; i < 5000000; i++) {
-                pstmt.setString(1, "127.0.0." + (i % 255));
+            int dateRange = 10000; // 日期循环范围，保证不超出MySQL最大日期
+            for (int i = 0; i < 10000000; i++) {
+                // host255种
+                String host = "127.0." + (i / dateRange) + "." + (i % 255);
+                pstmt.setString(1, host);
                 pstmt.setInt(2, 100 + i % 10000);
-
-                pstmt.setDate(3, Date.valueOf(baseDate.plusDays(i % 31)));
+                // date: 在10000天内循环
+                pstmt.setDate(3, Date.valueOf(baseDate.plusDays(i % dateRange)));
                 pstmt.addBatch();
 
                 if (i % batchSize == 0) {
